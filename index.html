@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>Pong</title>
+  </head>
+
+  <body>
+    <canvas></canvas>
+
+    <script type="application/javascript" src="js/leftPaddle.js"></script>
+    <script type="application/javascript" src="js/rightPaddle.js"></script>
+    <script type="application/javascript" src="js/ball.js"></script>
+    <script type="application/javascript" src="js/game.js"> </script>
+    <script type="application/javascript" src="js/gameView.js"> </script>
+    <script type="application/javascript">
+      (function () {
+        var canvasEl = document.getElementsByTagName("canvas")[0];
+        canvasEl.width = Pong.Game.DIM_X;
+        canvasEl.height = Pong.Game.DIM_Y;
+        var ctx = canvasEl.getContext("2d");
+        var game = new Pong.Game();
+        new Pong.GameView(game, ctx).start();
+      })();
+    </script>
