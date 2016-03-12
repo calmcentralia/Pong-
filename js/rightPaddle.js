@@ -6,36 +6,49 @@
   var RightPaddle = Pong.RightPaddle = function() {
     this.width = 10;
     this.height = 100;
-    this.pos = 300;
+    this.pos = 250;
     this.speed = 0;
     this.color = "#80FF80";
+    this.baseSpeed = 5;
   };
 
 
   RightPaddle.prototype.draw = function(ctx) {
-    ctx.clearRect(980, this.pos, this.width, this.height);
+    ctx.clearRect(1000 - this.width - 10, this.pos, this.width, this.height);
     ctx.fillStyle = this.color;
-    ctx.fillRect(980, this.pos, this.width, this.height);
+    ctx.fillRect(1000 - this.width - 10, this.pos, this.width, this.height);
   };
 
   RightPaddle.prototype.move = function(delta, keysDown) {
-    that = this;
+    splat = this;
     Object.keys(keysDown).forEach(function(key) {
       if(key === "38" ) {
-        that.speed = -5 * delta / (1000 / 60);
-        that.pos+= that.speed;
+        splat.speed = -splat.baseSpeed * delta / (1000 / 60);
+        splat.pos+= splat.speed;
       }
       if(key === "40" ) {
-        that.speed = 5 * delta / (1000 / 60);
-        that.pos+= that.speed;
+        splat.speed = splat.baseSpeed * delta / (1000 / 60);
+        splat.pos+= splat.speed;
       }
-      if(that.pos >= 500) {
-        that.pos = 500;
+      if(splat.pos >= 500) {
+        splat.pos = 500;
       }
-      if(that.pos <= 0) {
-        that.pos = 0;
+      if(splat.pos <= 0) {
+        splat.pos = 0;
       }
     });
   };
+
+  RightPaddle.prototype.handlePowerup = function(action) {
+    var current = this;
+    if (action === "speed up paddle") {
+      this.baseSpeed = 8;
+      window.setTimeout(function(){current.baseSpeed = 5}, 8000);
+    } else if(action === "mega paddle") {
+      this.width = 30;
+      this.height = 200;
+      window.setTimeout(function(){current.width = 10; current.height = 100;}, 8000);
+    }
+  }
 
   })();
