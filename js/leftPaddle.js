@@ -6,9 +6,10 @@
   var LeftPaddle = Pong.LeftPaddle = function() {
     this.width = 10;
     this.height = 100;
-    this.pos = 300;
+    this.pos = 250;
     this.speed = 0;
     this.color = "#FF4D4D";
+    this.baseSpeed = 5;
   };
 
 
@@ -19,23 +20,38 @@
   };
 
   LeftPaddle.prototype.move = function(delta, keysDown) {
-    that = this;
+    var splat = this;
     Object.keys(keysDown).forEach(function(key) {
       if(key === "87" ) {
-        that.speed = -5 * delta / (1000 / 60);
-        that.pos += that.speed;
+        splat.speed = -splat.baseSpeed * delta / (1000 / 60);
+        splat.pos += splat.speed;
       }
       if(key === "83") {
-        that.speed = 5 * delta / (1000 / 60);
-        that.pos+= that.speed;
+        splat.speed = splat.baseSpeed * delta / (1000 / 60);
+        splat.pos+= splat.speed;
       }
-      if(that.pos >= 500) {
-        that.pos = 500;
+      if(splat.pos + (splat.height) >= 600) {
+        splat.pos = 600 - splat.height;
       }
-      if(that.pos <= 0) {
-        that.pos = 0;
+      if(splat.pos <= 0) {
+        splat.pos = 0;
       }
     });
   };
+
+  LeftPaddle.prototype.handlePowerup = function(action) {
+    var current = this;
+    if (action === "speed up paddle") {
+      this.baseSpeed = 8;
+      window.setTimeout(function(){current.baseSpeed = 5}, 12000);
+    }
+
+    else if(action === "mega paddle") {
+      this.width = 30;
+      this.height = 200;
+      window.setTimeout(function(){current.width = 10; current.height = 100;}, 12000);
+
+    }
+  }
 
   })();
