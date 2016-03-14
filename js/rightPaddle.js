@@ -21,6 +21,9 @@
 
   RightPaddle.prototype.move = function(delta, keysDown) {
     splat = this;
+    if (Object.keys(keysDown).length === 0) {
+      this.speed = 0;
+    }
     Object.keys(keysDown).forEach(function(key) {
       if(key === "38" ) {
         splat.speed = -splat.baseSpeed * delta / (1000 / 60);

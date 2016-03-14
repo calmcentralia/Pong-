@@ -3,14 +3,18 @@
     window.Pong = {};
   }
   var FIRECOLORS = ["rgba(255,208,0,", "rgba(255,165,0,", "rgba(255,101,0,", "rgba(255,59,0,", "rgba(255, 17, 0,"]
-  var Ball = Pong.Ball = function (l,r) {
-
+  var Ball = Pong.Ball = function (effects) {
     this.x = 500;
     this.y = 300;
     this.velX = 7;
     this.velY = 0;
     this.radius = 7;
     this.fire = false;
+    this.fireEffect = effects[0];
+    this.fireEffect.loop = false;
+    this.rightPing = effects[1];
+    this.leftPing = effects[2];
+    this.point = effects[3];
   };
 
 
@@ -44,33 +48,45 @@
     }
 
     if (this.x > 1000) {
+      this.point.play();
+      var temp = this.velX;
+      if(!this.fire) {
+        temp = 7;
+      }
       this.velY = 0;
       this.velX = 0;
       this.x = 500;
       this.y = 300;
       var that = this;
-      window.setTimeout(function(){that.velX=7;}, 1000)
+      window.setTimeout(function(){that.velX= temp;}, 1000)
       callback("player 1")
     }
 
     if (this.x < 0) {
+      this.point.play();
+      var temp = this.velX;
+      if (!this.fire){
+        temp = -7;
+      }
       this.velY = 0;
       this.velX = 0;
       this.x = 500;
       this.y = 300;
       var that = this;
-      window.setTimeout(function(){that.velX=-7;}, 1000)
+      window.setTimeout(function(){that.velX= temp;}, 1000)
       callback("player 2")
     }
 
     if(upperX > 500 ) {
-      if(upperX < ( 990 + right.width) && lowerX > 990 && upperY < (right.height + right.pos) && lowerY > right.pos) {
+      if(upperX < (1000) && lowerX > 1000-right.width && upperY < (right.height + right.pos) && lowerY > right.pos) {
+        this.rightPing.play()
         this.velX = -this.velX;
         this.velY += (right.speed/ 2);
         this.x += this.velX;
       }
     } else {
       if(upperX < (left.width) && lowerX > 0 && upperY < (left.height + left.pos) && lowerY > left.pos) {
+        this.leftPing.play()
         this.velX = -this.velX;
         this.velY = (left.speed/ 2);
         this.x += this.velX;
@@ -79,11 +95,12 @@
   }
 
   Ball.prototype.handlePowerup = function (action) {
-    this.velX = 9;
+    this.velX > 0 ? this.velX = 14 : this.velX = -14;
     this.fire = true;
+    this.fireEffect.play();
     var that = this;
     window.setTimeout(function(){
-      that.velX = 7;
+      that.velX > 0 ? that.velX = 7 : that.velX = -7;
       that.fire = false;
           }, 8000)
   };
@@ -93,7 +110,7 @@
     for (var i = 0; i < 100; i++) {
       particles.push(new Particle(this.x, this.y));
     }
-    
+
     for (var i = 0; i < particles.length; i++) {
 
       var p = particles[i];
