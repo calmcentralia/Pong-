@@ -9,13 +9,15 @@
     this.rightPaddle = [];
     this.powerups = [];
     this.addPaddles();
-    this.addBall(this.leftPaddle, this.rightPaddle);
+
     this.player1 = 0;
     this.player2 = 0;
     this.disco = false;
     this.discoTime = 0;
     this.discoDelay = 0;
     this.bg = ""
+    this.sounds = [new Audio(["./resources/fire.mp3"]), new Audio(["./resources/right.wav"]), new Audio(["./resources/left.wav"]), new Audio(["./resources/point.wav"]), new Audio(["./resources/201_rave_on.mp3"])];
+    this.addBall(this.leftPaddle, this.rightPaddle);
   };
 
   Game.BG_COLOR = "#000000";
@@ -34,15 +36,17 @@
 
   var keysDown = {};
   window.addEventListener("keydown", function(e) {
-
+    e.preventDefault();
     keysDown[e.keyCode] = true;
   });
 
   window.addEventListener("keyup", function(e) {
     delete keysDown[e.keyCode];
+
   });
   Game.prototype.addBall = function() {
-    var ball = new Pong.Ball();
+
+    var ball = new Pong.Ball(this.sounds);
     this.balls.push(ball);
   }
   Game.prototype.addPaddles = function () {
@@ -52,13 +56,20 @@
     this.rightPaddle.push(rPaddle);
 
   };
+  Game.prototype.muteAll = function (game) {
+
+    game.sounds.forEach(function(sound){
+      sound.muted ? sound.muted = false : sound.muted = true;
+    })
+  };
   Game.prototype.allItems = function () {
     return [].concat(this.balls, this.leftPaddle, this.rightPaddle, this.powerups);
   };
 
 
-  Game.prototype.draw = function (ctx, delta) {
+  Game.prototype.draw = function (ctx, delta, music) {
     if(this.disco) {
+      this.sounds[4].play();
       this.discoDelay += delta;
       this.discoTime += delta;
       if (this.discoDelay> 500) {
@@ -68,6 +79,7 @@
       if(this.discoTime > 16000) {
         this.discoTime = 0;
         this.disco = false;
+        this.sounds[4].pause();
       }
     } else {
       this.bg = Game.BG_COLOR;
@@ -98,8 +110,7 @@
         object.move(delta, keysDown);
       }
       if(object instanceof Pong.Ball) {
-
-        object.move(that.leftPaddle[0], that.rightPaddle[0], function(flag) {
+        object.move(that.leftPaddle[0], that.rightPaddle[0],  function(flag) {
 
           if(flag === "player 1") {
             that.player1 += 1;
@@ -113,19 +124,23 @@
 
         object.move(that.leftPaddle[0], that.rightPaddle[0], function(flag, action) {
           if (action === "disco mode")
-          {that.disco = true;}
-          else if (action === "speed ball")
+          {that.disco = true;
+          that.powerups.pop();
+        }else if (action === "speed ball"){
           that.balls[0].handlePowerup(action);
-          else{
+          that.powerups.pop();
+        } else{
         switch (flag) {
           case "delete":
-            that.powerups=[];
+            that.powerups.pop();
             break;
           case "player1":
             that.leftPaddle[0].handlePowerup(action);
+            that.powerups.pop();
             break;
           case "player2":
             that.rightPaddle[0].handlePowerup(action);
+            that.powerups.pop();
             break;
               }
             }
@@ -135,13 +150,13 @@
   };
 
   Game.prototype.checkIfWon = function(ctx) {
-    if(this.player1 >= 15) {
+    if(this.player1 >= 8) {
       ctx.font = "100px Calibri";
       ctx.fillStyle = 'white';
       ctx.textAlign = "center";
       ctx.fillText("Player 1 Wins", 500, 300);
       return true;
-    } else if(this.player2 >= 15) {
+    } else if(this.player2 >= 8) {
       ctx.font = "100px Calibri";
       ctx.fillStyle = 'white';
       ctx.textAlign = "center";

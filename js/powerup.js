@@ -3,7 +3,7 @@
     window.Pong = {};
   }
 
-  var TYPES =[ "speed ball"];
+  var TYPES =["speed up paddle", "mega paddle", "disco mode", "speed ball"];
 
   var Powerup = Pong.Powerup = function (direction) {
     this.x = 500;
@@ -46,6 +46,7 @@
       var lowerY = this.y + this.radius;
 
       if (this.x > 1000 || this.x < 0) {
+        this.radius = 0;
         callback("delete");
       }
 
