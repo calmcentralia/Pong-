@@ -41,6 +41,7 @@
   });
 
   window.addEventListener("keyup", function(e) {
+    e.preventDefault();
     delete keysDown[e.keyCode];
 
   });
