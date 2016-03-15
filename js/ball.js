@@ -6,7 +6,7 @@
   var Ball = Pong.Ball = function (effects) {
     this.x = 500;
     this.y = 300;
-    this.velX = 7;
+    this.velX = 5;
     this.velY = 0;
     this.radius = 7;
     this.fire = false;
@@ -95,12 +95,12 @@
   }
 
   Ball.prototype.handlePowerup = function (action) {
-    this.velX > 0 ? this.velX = 14 : this.velX = -14;
+    this.velX > 0 ? this.velX = 10 : this.velX = -10;
     this.fire = true;
     this.fireEffect.play();
     var that = this;
     window.setTimeout(function(){
-      that.velX > 0 ? that.velX = 7 : that.velX = -7;
+      that.velX > 0 ? that.velX = 5 : that.velX = -5;
       that.fire = false;
           }, 8000)
   };
