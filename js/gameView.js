@@ -12,9 +12,7 @@
   GameView.prototype.start = function () {
       this.lastTime = 0;
       this.powerTime = 0;
-      //start the animation
-
-      window.setTimeout(this.startIt.bind(this), 50);
+      this.canvas = document.getElementsByTagName("canvas")[0];
       requestAnimationFrame(this.beginGame.bind(this));
     };
 
@@ -23,8 +21,8 @@
   };
 
   GameView.prototype.beginGame = function(time) {
-
-    window.addEventListener("click", this.animate.bind(this, time) )
+    this.handler = this.animate.bind(this, time);
+    this.canvas.addEventListener("click", this.handler )
     this.ctx.clearRect(0, 0,Pong.Game.DIM_X, Pong.Game.DIM_Y);
     this.ctx.fillStyle = Pong.Game.BG_COLOR;
     this.ctx.fillRect(0, 0, Pong.Game.DIM_X, Pong.Game.DIM_Y);
@@ -38,9 +36,10 @@
     this.begin = true;
   }
 
+
   GameView.prototype.animate = function(time){
     if(this.begin) {
-      window.removeEventListener("click", this.animate.bind(this, time) );
+      this.canvas.removeEventListener("click", this.handler );
       this.begin = false;
     }
     if(this.game.checkIfWon(this.ctx)){
