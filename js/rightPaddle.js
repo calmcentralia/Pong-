@@ -33,8 +33,8 @@
         splat.speed = splat.baseSpeed * delta / (1000 / 60);
         splat.pos+= splat.speed;
       }
-      if(splat.pos >= 500) {
-        splat.pos = 500;
+      if(splat.pos + (splat.height) >= 600) {
+        splat.pos = 600 - splat.height;
       }
       if(splat.pos <= 0) {
         splat.pos = 0;
