@@ -1,4 +1,4 @@
-# [Pong +](pongchamp.herokuapp.com)
+# [Pong +](http://pongchamp.herokuapp.com)
 
 ## Technologies Used
 
