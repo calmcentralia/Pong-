@@ -51,7 +51,7 @@
       this.point.play();
       var temp = this.velX;
       if(!this.fire) {
-        temp = 7;
+        temp = 5;
       }
       this.velY = 0;
       this.velX = 0;
@@ -66,7 +66,7 @@
       this.point.play();
       var temp = this.velX;
       if (!this.fire){
-        temp = -7;
+        temp = -5;
       }
       this.velY = 0;
       this.velX = 0;
