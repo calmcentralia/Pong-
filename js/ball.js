@@ -83,13 +83,15 @@
         this.velX = -this.velX;
         this.velY += (right.speed/ 2);
         this.x += this.velX;
+        this.y += this.velY;
       }
     } else {
       if(upperX < (left.width) && lowerX > 0 && upperY < (left.height + left.pos) && lowerY > left.pos) {
         this.leftPing.play()
         this.velX = -this.velX;
-        this.velY = (left.speed/ 2);
+        this.velY += (left.speed/ 2);
         this.x += this.velX;
+        this.y += this.velY;
       }
     }
   }
