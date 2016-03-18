@@ -81,7 +81,18 @@
       if(upperX < (1000) && lowerX > 1000-right.width && upperY < (right.height + right.pos) && lowerY > right.pos) {
         this.rightPing.play()
         this.velX = -this.velX;
+        if (this.y - right.pos >= right.height/3 && this.y - right.pos <= 2*right.height/3){
+          this.velY += 0;
+        }
+        else if((lowerY-right.pos)>(2*right.height/3)) {
+          this.velY += 2;
+        } else if ((upperY-right.pos)<(right.height/3)) {
+          this.velY += -2;
+        }
         this.velY += (right.speed/ 2);
+        if (this.velY > 12) {
+          this.velY = 12;
+        }
         this.x += this.velX;
         this.y += this.velY;
       }
@@ -89,7 +100,18 @@
       if(upperX < (left.width) && lowerX > 0 && upperY < (left.height + left.pos) && lowerY > left.pos) {
         this.leftPing.play()
         this.velX = -this.velX;
+        if (this.y - left.pos >= left.height/3 && this.y - left.pos <= 2*left.height/3){
+          this.velY += 0;
+        }
+        else if((lowerY-left.pos)>(2*left.height/3)) {
+          this.velY += 2;
+        } else if ((upperY-left.pos)<(left.height/3)) {
+          this.velY += -2;
+        }
         this.velY += (left.speed/ 2);
+        if (this.velY > 12) {
+          this.velY = 12;
+        }
         this.x += this.velX;
         this.y += this.velY;
       }
