@@ -18,6 +18,10 @@ button {
   background-color: red;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
 button:active, button:focus {
   outline: 0;
 }
@@ -27,7 +31,8 @@ button:active, button:focus {
   margin: 0 auto;
   width: 450px;
   height: 450px;
-  background-color: #d6ebf2
+  background-color: #d6ebf2;
+  text-align: center;
 }
 
 .mega {
