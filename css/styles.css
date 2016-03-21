@@ -31,6 +31,7 @@ button:active, button:focus {
 }
 
 .mega {
+  margin: 0 auto;
   height: 30px;
   width: 30px;
   border-radius: 50%;
@@ -38,6 +39,7 @@ button:active, button:focus {
 }
 
 .paddle-speed{
+  margin: 0 auto;
   height: 30px;
   width: 30px;
   border-radius: 50%;
@@ -45,6 +47,7 @@ button:active, button:focus {
 }
 
 .fireball{
+  margin: 0 auto;
   height: 30px;
   width: 30px;
   border-radius: 50%;
@@ -52,8 +55,13 @@ button:active, button:focus {
 }
 
 .disco{
+  margin: 0 auto;
   height: 30px;
   width: 30px;
   border-radius: 50%;
   background-color: #f600f6;
+}
+
+.text{
+  text-align: center;
 }
