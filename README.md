@@ -1,4 +1,4 @@
-# [Pong +](http://pongchamp.herokuapp.com)
+# [Pong +](http://kevindolch.github.io/Pong-/)
 
 ## Technologies Used
 
